@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Hangman
 {
@@ -10,28 +11,41 @@ namespace Hangman
             while (keepPlaying)
             {
                 Console.Clear();
-                Console.WriteLine("Väkommen till Hänga Gubbe. Du har 10 försök för att komma fram till rätt ord.\n");
+                Console.WriteLine("Väkommen till Hänga Gubbe. Du har 10 försök för att komma fram till rätt ord.");
                 string[] words = {"Soffa", "Blåbär", "Gummi", "Trevlig", "Under", "Läser", "Programmering", "Lista", "Slumpmässigt", "Sätter",
                 "Inlevelse", "Beskrivning", "Veckoslut", "Vinterdäck", "Långfärdsskridskor", "Grävutrustning", "Sparkcykel", "Norrsken", "Höstfärger", "Mandelblom",
                 "Längtan", "Pensionerad", "Gammal", "Filosofisk", "Huvudled", "Riktlinjer", "Verkstad", "Vommen", "Ordvits", "Bohusleden"};
                 Random rand = new Random();
                 int index = rand.Next(words.Length);
                 string secretWord = words[index].ToLower();
-                string[] wordArray = new string[secretWord.Length]; Console.Write("Hemliga ordet: ");
-                writeWordArray(secretWord, wordArray);                
+                char[] wordArray = new char[secretWord.Length];
+                writeWordArray(secretWord, wordArray);
 
+                List<string> inputLettersList = new List<string>();
                 bool tenGuesses = true;
                 for (int i = 0; i < 10; i++)
                 {
-                    Console.WriteLine("\nGissa på en bokstav eller hela ordet. " + (10 - i) + " försök kvar.");
+                    Console.WriteLine("Gissa på en bokstav eller hela ordet. " + (10 - i) + " försök kvar.");
                     string userInput = Console.ReadLine().ToLower();
                     if (userInput.Length == 1)
                     {
-                        CheckLetter(userInput);
+                        foreach (string n in inputLettersList)
+                        {
+                            if (n == userInput)
+                            {
+                                Console.WriteLine("\nDu har redan gissat på denna bokstav. Försök igen!");
+                                i--;
+                                inputLettersList.Remove(userInput);
+                                break;
+                            }
+                        }
+                        inputLettersList.Add(userInput);
+                        writeWordArray(secretWord, wordArray);
                     }
                     else if(userInput.Length == 0)
                     {
-                        Console.WriteLine();
+                        Console.WriteLine("Du skrev inte inte in något. Försök igen!");
+                        i--;
                     }
                     else if(userInput == secretWord)
                     {
@@ -42,6 +56,7 @@ namespace Hangman
                     else
                     {
                         Console.WriteLine("Ordet du angav var inte rätt ord!");
+                        writeWordArray(secretWord, wordArray);
                     }
                 }
                 while (tenGuesses)
@@ -72,21 +87,30 @@ namespace Hangman
                 }
             }
         }
-        static void writeWordArray(string secretWord, string[] wordArray)
+        static void writeWordArray(string secretWord, char[] wordArray)
         {
+            Console.Write("\nHemliga ordet: ");
             for (int j = 0; j < secretWord.Length; j++)
             {
-                wordArray[j] = " _ ";
+                wordArray[j] = char.Parse("_");
             }
-            foreach (string s in wordArray)
+            foreach (char s in wordArray)
             {
-                Console.Write(s);
+                Console.Write(s + " ");
             }
             Console.WriteLine();
         }
-        static string CheckLetter(string userGuessLetter)
+        static string CheckLetter(List<string> inputLetersString, string userGuessLetter)
         {
+            for (int i = 0; i < inputLetersString.Count; i++)
+            {
+                if (userGuessLetter == inputLetersString[i])
+                {
+                    Console.WriteLine("\nDu har redan gissat på denna bokstav. Försök igen!");
 
+                }
+            }
+            inputLetersString.Add(userGuessLetter);
             return userGuessLetter;
         }
     }
