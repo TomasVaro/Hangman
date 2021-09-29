@@ -18,15 +18,9 @@ namespace Hangman
                 int index = rand.Next(words.Length);
                 string secretWord = words[index].ToLower();
                 string[] wordArray = new string[secretWord.Length]; Console.Write("Hemliga ordet: ");
-                for (int j = 0; j < secretWord.Length; j++)
-                {
-                    wordArray[j] = " _ ";
-                }
-                foreach (string s in wordArray)
-                {
-                    Console.Write(s);
-                }
-                Console.WriteLine();
+                writeWordArray(secretWord, wordArray);                
+
+                bool tenGuesses = true;
                 for (int i = 0; i < 10; i++)
                 {
                     Console.WriteLine("\nGissa på en bokstav eller hela ordet. " + (10 - i) + " försök kvar.");
@@ -35,12 +29,28 @@ namespace Hangman
                     {
                         CheckLetter(userInput);
                     }
+                    else if(userInput.Length == 0)
+                    {
+                        Console.WriteLine();
+                    }
                     else if(userInput == secretWord)
                     {
-                        Console.WriteLine("Grattis! Du lyckades gissa rätt ord (" + secretWord + ") på " + i + " försök!");
+                        Console.WriteLine("Grattis! Du lyckades gissa rätt ord (" + secretWord + ") på " + (i + 1) + " försök!");
+                        tenGuesses = false;
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Ordet du angav var inte rätt ord!");
                     }
                 }
-                Console.WriteLine("\nDu lyckades inte gissa rätt ord på 10 gissningar!\nVill du prova igen? (j/n)");
+                while (tenGuesses)
+                {
+                    Console.WriteLine("\nDu lyckades inte gissa rätt ord på 10 gissningar!");
+                    tenGuesses = false;
+                }
+
+                Console.WriteLine("\nVill du prova igen? (j/n)");
                 bool running = true;
                 while (running)
                 {
@@ -61,6 +71,18 @@ namespace Hangman
                     }
                 }
             }
+        }
+        static void writeWordArray(string secretWord, string[] wordArray)
+        {
+            for (int j = 0; j < secretWord.Length; j++)
+            {
+                wordArray[j] = " _ ";
+            }
+            foreach (string s in wordArray)
+            {
+                Console.Write(s);
+            }
+            Console.WriteLine();
         }
         static string CheckLetter(string userGuessLetter)
         {
