@@ -49,7 +49,7 @@ namespace Hangman
                                     Console.WriteLine("Du har redan gissat på denna bokstav (" + userInput + "). Försök igen!");
                                     Console.Write("\nHemliga ordet: ");
                                     Console.WriteLine(string.Join(" ", correctLettersArray));
-                                    Console.WriteLine("Du har gissat på följade felaktiga bokstäver: " + incorrectLetters + "\n");
+                                    Console.WriteLine("Du har gissat på följade felaktiga bokstäver: " + incorrectLetters);
                                     remainingGuesses++;
                                     check = false;
                                     break;
@@ -89,16 +89,16 @@ namespace Hangman
                     }
                     else if(userInput == secretWord)
                     {
-                        Console.WriteLine("Grattis! Du lyckades gissa rätt ord (" + userInput + ") på " + (11 - remainingGuesses) + " försök!");
+                        Console.WriteLine("Grattis! Du lyckades gissa rätt ord (" + userInput + ") på " + (10 - remainingGuesses) + " försök!");
                         tenGuesses = false;
                         break;
                     }
                     else
                     {
-                        Console.WriteLine("Ordet du angav var inte rätt ord!"); 
-                        Console.Write("\nHemliga ordet: ");
+                        Console.WriteLine("Ordet du angav var inte rätt ord!\n"); 
+                        Console.Write("Hemliga ordet: ");
                         Console.WriteLine(string.Join(" ", correctLettersArray));
-                        Console.WriteLine("Du har gissat på följade felaktiga bokstäver: " + incorrectLetters + "\n");
+                        Console.WriteLine("Du har gissat på följade felaktiga bokstäver: " + incorrectLetters);
                     }
                 }
                 while (tenGuesses)
