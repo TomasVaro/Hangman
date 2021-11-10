@@ -1,5 +1,6 @@
 # Hangman
 A Console-based game called Hangman.
+
 The application chooses randomly a word and you have to guess it by suggesting letters. 
 The word to guess is represented by a row of dashes where each dash represents a letter in the word.
 Game Rules implemented:
