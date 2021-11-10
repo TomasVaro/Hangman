@@ -10,9 +10,9 @@ The word to guess is represented by a row of dashes where each dash represents a
 
 • The player can make two type of guesses:
 
-o Guess for a specific letter. If player guess a letter that occurs in the word, the program should update by inserting the letter in the correct position(s).
+  o Guess for a specific letter. If player guess a letter that occurs in the word, the program should update by inserting the letter in the correct position(s).
 
-o Guess for the whole word. The player type in a word he/she thinks is the word. If the guess is correct player wins the game and the whole word is revealed. If the word is incorrect nothing should get revealed.
+  o Guess for the whole word. The player type in a word he/she thinks is the word. If the guess is correct player wins the game and the whole word is revealed. If the word is incorrect nothing should get revealed.
 
 • If the player guesses the same letter twice, the program will not consume a guess.
 
